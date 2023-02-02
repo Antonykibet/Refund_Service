@@ -1,0 +1,1 @@
+<a href="init-auth.php">Login with Discord</a>
