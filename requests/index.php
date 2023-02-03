@@ -45,7 +45,13 @@ $conn->close();
         border-collapse: collapse;
         text-align: left;
     }
-
+    body{
+        background-color:rgb(21, 32, 43) ;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    }
 
 </style>
 

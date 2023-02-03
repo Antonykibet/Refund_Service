@@ -2,71 +2,114 @@
 
 session_start();
 
-if (!$_SESSION['logged_in']) {
-    header('Location: error.php');
-    exit();
-}
+//if (!$_SESSION['logged_in']) {
+ //   header('Location: error.php');
+//    exit();
+//}
 
-extract($_SESSION['userData']);
+//extract($_SESSION['userData']);
 $storeErr = $phoneErr = $orderErr = $credentialsErr = $amountErr = "";
 ?>
+<head>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,900&display=swap" rel="stylesheet">
 
-<div>
-    <div>
-        <span><?php echo $name;?></span>
+</head>
+<body>
+    <div id="header">
+        <span>Username</span>
+        <div id="miniHeader">
+                <div id="logo">Jservices</div>
+                <div id="links">
+                   <a href="home.html">
+                   <div id="home">
+                        Home
+                    </div>
+                   </a> 
+                    <div id="refundable">Refundable Stores</div>
+                    <a href="dashboard.php">
+                        <div id="refunds">
+                            Refunds
+                            <div id="homeTab"></div>
+                        </div>
+                    </a>
+                </div>
+                <button id="login">
+                    <img id="icon" src="icons8-discord-new-48.png" alt="">
+                    Login</button>
+            </div>
+       <!-- <div id="home">Home</div>
+        <div id="refundable">Refundable Stores</div>
+        <div id="refunds">Refunds</div>
+        <a href="logout.php">Logout</a>-->
     </div>
-    <div>
-        <a href="logout.php">Logout</a>
-    </div>
-</div>
+    
 
-<div>
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
-        <div>
-            <span>Country</span><br>
-            <input type="radio" id="usa" name="country" value="USA" checked>
-            <label for="usa">USA</label><br>
-            <input type="radio" id="canada" name="country" value="Canada">
-            <label for="canada">Canada</label><br>
-            <input type="radio" id="uk" name="country" value="UK">
-            <label for="uk">UK</label>
+
+    <form  action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
+    <div id="Body">
+        <div id="form">
+        <h3 id="formTitles">Country</h3>
+            <div id="radioButtons">
+                 <input type="radio" id="countryButton" name="country" value="USA" checked>
+                 <label id="countryNames" for="usa">USA</label><br>
+                 <input type="radio" id="countryButton" name="country" value="Canada">
+                 <label id="countryNames" for="canada">Canada</label><br>
+                 <input type="radio" id="countryButton" name="country" value="UK">
+                 <label id="countryNames" for="uk">UK</label>
+            </div>
+            
+               <label id="formTitles" for="username">Discord Username</label><br>
+               <div id="input1">
+                    <input type="text" id="textBox" name="username" value="<?php echo $name?>"><br>
+                    <img id="icon1" src="" alt="">
+                </div>
+            
+            
+            <label id="formTitles" for="store">Store</label><br>
+            <select  name="store" id="store"></select>
+            <span id="errorMessage" class="error"><?php echo $storeErr?></span><br>
+    
+        
+            <label id="formTitles" for="phone">Phone</label><br>
+            <input type="tel" name="phone" id="textBox">
+            <span id="errorMessage" class="error"><?php echo $phoneErr?></span><br>
+
+
+        
+            <label id="formTitles" for="orderNumber">Order Number</label><br>
+            <input type="text" name="orderNumber" id="textBox"><br>
+            <span id="errorMessage" class="error"><?php echo $orderErr?></span><br>
+            <span id="extraInfo">If multiple, separate them by commas. e.g. "orderid1,orderid2"</span>
+        
+        
+            <label id="formTitles" for="credentials">Login Credentials</label><br>
+            <input type="text" name="credentials" id="textBox">
+            <span id="errorMessage" class="error"><?php echo $credentialsErr?></span><br>
+            <span id="extraInfo">It must be in email:password format.</span><br>
+            <span id="extraInfo">IF GUEST ORDER PLS PUT SHIPPING/BILLING INFO FOR PASSWORD SO WE CAN FIND YOUR ORDER!</span>
+    
+        
+            <label id="formTitles" for="amount">Full total(including taxes&shipping)</label><br>
+            <input type="text" name="amount" id="textBox"><br>
+            <span id="errorMessage" class="error"><?php echo $amountErr?></span><br>
+    
+             <span id="extraInfo">By clicking Submit, you agree to the Terms & Conditions</span><br>
+             <input type="submit" name="submit" id="submit" value="Submit">
+            
+        
+        
+            
         </div>
-        <div>
-            <label for="username">Discord Username</label><br>
-            <input type="text" id="username" name="username" value="<?php echo $name?>"><br>
-        </div>
-        <div>
-            <label for="store">Store</label><br>
-            <select name="store" id="store"></select>
-            <span class="error"><?php echo $storeErr?></span><br>
-        </div>
-        <div>
-            <label for="phone">Phone</label><br>
-            <input type="tel" name="phone" id="phone">
-            <span class="error"><?php echo $phoneErr?></span><br>
-        </div>
-        <div>
-            <label for="orderNumber">Order Number</label><br>
-            <input type="text" name="orderNumber" id="orderNumber"><br>
-            <span class="error"><?php echo $orderErr?></span><br>
-            <span>If multiple, separate them by commas. e.g. "orderid1,orderid2"</span>
-        </div>
-        <div>
-            <label for="credentials">Login Credentials</label><br>
-            <input type="text" name="credentials" id="credentials">
-            <span class="error"><?php echo $credentialsErr?></span><br>
-            <span>It must be in email:password format.</span><br>
-            <span>IF GUEST ORDER PLS PUT SHIPPING/BILLING INFO FOR PASSWORD SO WE CAN FIND YOUR ORDER!</span>
-        </div>
-        <div>
-            <label for="amount">Full total including taxes + shipping</label><br>
-            <input type="text" name="amount" id="amount"><br>
-            <span class="error"><?php echo $amountErr?></span><br>
-        </div>
-        <span>By clicking Submit, you agree to the Terms & Conditions</span><br>
-        <input type="submit" name="submit" id="submit" value="Submit">
+        <div id="terms"></div>
+    </div>
+
+        
     </form>
-</div>
+    
+
+</body>
+    
 
 <script>
     let country = "";
